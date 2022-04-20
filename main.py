@@ -1,11 +1,21 @@
+import platform
+
 import pyautogui
 import matplotlib.pyplot as plt
 import os
+import sys
 #for now it plots mouse movement
 #probably will be changed to plot mouse clicks
 #also probably laughably inefficient and obscure way of doing this but whatever
 
 # import numpy as np
+
+def display_system_info():
+    system_info=platform.platform()
+    print('OS: ' + os.name)
+    print('Platform: ' + sys.platform)
+    print('System info: ' + system_info)
+
 def check_file_size():
     file_size = os.path.getsize('mouseData.txt')
     print(file_size)
@@ -46,15 +56,18 @@ def plot_mouse_position():
     plt.plot(x_list, y_list)
     plt.show()
 
+def cleanup_file():
+    open('mouseData.txt', 'w').close()
+    os.remove('mouseData.txt')  # cleanup of a temp file
 
 def main():
+    display_system_info()
     print_screen_size()
     write_mouse_position()
     plot_mouse_position()
     check_file_size()
-    open('mouseData.txt', 'w').close()
-    os.remove('mouseData.txt')  # cleanup of a temp file
-
+    cleanup_file()
+    #safe file sizes until now
 
 if __name__ == '__main__':
     main()
